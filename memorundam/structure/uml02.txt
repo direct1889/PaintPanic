@@ -1,0 +1,133 @@
+@startuml uml01.png
+
+title <size:18> Class Structure </size>
+
+package Utility {
+
+	interface di {
+		IUserInput User()
+	}
+	interface IUserInput {
+		IArrowInput Arrow()
+		IButtonInput Button()
+	}
+
+
+	IUserInput <-- di
+
+}
+
+package Player {
+
+	interface IObservablePlayerInput {
+	}
+	class PlayerInput
+
+
+	IObservablePlayerInput <|.up. PlayerInput
+
+}
+
+di <-- PlayerInput
+
+
+package Machine {
+
+	class MachineController
+
+	class Collider
+	interface IObservableCollider
+
+	Collider .up.|> IObservableCollider
+
+	MachineController --> IObservableCollider
+
+	package Status {
+
+		class Status
+		interface IStatus
+		interface IReadOnlyStatus
+		interface IReadOnlyObservableStatus
+
+		IStatus <|.. Status
+		IReadOnlyStatus <|.. IReadOnlyObservableStatus
+		IReadOnlyObservableStatus <|.. Status
+
+	}
+
+	interface IModuleManager
+	class ModuleManager
+
+	ModuleManager .up.|> IModuleManager
+
+	class ConcreteSoftWare
+	interface ISoftWare
+	class ConcreteHardWare
+	interface IHardWare
+
+	ConcreteSoftWare .up.|> ISoftWare
+	ConcreteHardWare .up.|> IHardWare
+
+	MachineController --> IModuleManager
+
+	ModuleManager o-- ISoftWare
+	ModuleManager o-- IHardWare
+
+	MachineController --> IStatus
+
+	package Attack {
+
+		interface IAttackController
+		class AttackController
+
+		interface IAttack
+		class ConcreteAttack
+
+		AttackController ..|> IAttackController
+		AttackController o-- IAttack
+		IAttack <|.. ConcreteAttack
+
+	}
+
+	IAttackController <-- MachineController
+
+
+	package UI {
+
+		class MachineUI
+
+	}
+
+	package Body {
+
+		interface IBodyController
+		class BodyController
+
+		IBodyController <|.. BodyController
+
+	}
+
+	IBodyController <-- MachineController
+
+	MachineUI --> IReadOnlyObservableStatus
+
+}
+
+MachineController -up-> IObservablePlayerInput
+
+package Others {
+
+	class ConcreteStage
+	interface IStage
+
+	IStage <|.. ConcreteStage
+
+	class ConcreteEnemy
+	interface IEnemy
+
+	IEnemy <|.. ConcreteEnemy
+
+}
+
+@enduml
+

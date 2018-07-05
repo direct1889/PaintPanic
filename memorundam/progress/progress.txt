@@ -1,0 +1,18 @@
+
+// 05 July 2018 ---------------
+
+prepare to create project
+	upgrade Unity
+	create github repository
+	clone from git
+	open with sourcetree
+	put readme.md
+	put .gitignore
+initialize unity project
+	create unity project
+	config project for smartphone
+		window size and aspect ratio
+
+// 06 July 2018 ---------------
+
+
