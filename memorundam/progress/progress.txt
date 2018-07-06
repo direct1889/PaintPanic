@@ -10,9 +10,13 @@ prepare to create project
 	put .gitignore
 initialize unity project
 	create unity project
+
+// 07 July 2018 ---------------
+
 	config project for smartphone
 		window size and aspect ratio
+design architecture
+	draw a class diagram with UML
 
-// 06 July 2018 ---------------
 
 
