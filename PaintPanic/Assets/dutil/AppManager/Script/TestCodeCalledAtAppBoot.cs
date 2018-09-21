@@ -14,6 +14,7 @@ namespace du.Test {
 
 		public void Test() {
 
+			di.Touch.GetTouch(5);
 
 		}
 

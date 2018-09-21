@@ -6,7 +6,7 @@ namespace du.Sys {
 
 	public class AppManager : MonoBehaviour {
 
-		public static AppManager Instance { get; private set; }// = null;
+		public static AppManager Instance { get; private set; } = null;
 
 
 		// [SerializeField] List<Initializable> m_initializables = null;
@@ -14,6 +14,7 @@ namespace du.Sys {
 		[SerializeField] bool m_isMute = true;
 		[SerializeField] float m_masterVolume = 0.01f;
 		[SerializeField] bool m_isDebugMode = false;
+		[SerializeField] TestLogger m_testLogger = null;
 
 		Test.ITestCode m_test = null;
 
@@ -64,8 +65,13 @@ namespace du.Sys {
 
 			// GlobalStore.IsMute = m_isMute;
 
-			Instance.m_test = new Test.TestCodeCalledAtAppBoot();
-			Instance.m_test.Test();
+			if (m_isDebugMode) {
+				Instance.m_test = new Test.TestCodeCalledAtAppBoot();
+				Instance.m_test.Test();
+			}
+			else {
+				Instance.m_testLogger.gameObject.SetActive(false);
+			}
 
 
 		}
