@@ -46,6 +46,10 @@ namespace du.Sys {
 
 		}
 
+		public void SetText(string key, object value) {
+			SetText(key, value.ToString());
+		}
+
 		#endregion
 
 

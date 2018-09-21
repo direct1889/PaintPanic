@@ -6,23 +6,33 @@ namespace du.Sys {
 
 	public class AppManager : MonoBehaviour {
 
+		#region singleton
+
 		public static AppManager Instance { get; private set; } = null;
 
+		#endregion
+
+
+		#region field
 
 		// [SerializeField] List<Initializable> m_initializables = null;
 
 		[SerializeField] bool m_isMute = true;
 		[SerializeField] float m_masterVolume = 0.01f;
 		[SerializeField] bool m_isDebugMode = false;
-		[SerializeField] TestLogger m_testLogger = null;
+		[SerializeField] TestLogger m_testLog = null;
 
+		public TestLogger TestLog { get { return m_testLog; }}
 		Test.ITestCode m_test = null;
 
+		#endregion
+
+
+		#region mono
 
 		private void Awake() {
 
 			if (Instance != null) {
-				Destroy(gameObject);
 				return;
 			}
 
@@ -33,6 +43,16 @@ namespace du.Sys {
 
 		}
 
+		private void Update() {
+			if (m_isDebugMode) {
+				m_test.OnUpdate();
+			}
+		}
+
+		#endregion
+
+
+		#region private
 
 		private void Boot() {
 
@@ -66,15 +86,17 @@ namespace du.Sys {
 			// GlobalStore.IsMute = m_isMute;
 
 			if (m_isDebugMode) {
-				Instance.m_test = new Test.TestCodeCalledAtAppBoot();
-				Instance.m_test.Test();
+				Instance.m_test = new Test.TestCodeCalledByAppMgr();
+				Instance.m_test.OnBoot();
 			}
 			else {
-				Instance.m_testLogger.gameObject.SetActive(false);
+				Instance.m_testLog.gameObject.SetActive(false);
 			}
 
 
 		}
+
+		#endregion
 
 	}
 
