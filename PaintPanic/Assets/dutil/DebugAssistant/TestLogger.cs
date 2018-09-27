@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UGUI = UnityEngine.UI;
 
 
-namespace du.Sys {
+namespace du.Test {
 
 	public class TestLogger : MonoBehaviour {
 

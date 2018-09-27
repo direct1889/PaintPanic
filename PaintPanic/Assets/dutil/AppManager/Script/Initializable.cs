@@ -1,5 +1,5 @@
 ﻿ 
-namespace du.Sys {
+namespace du.App {
 
 	public interface IInitializable {
 

@@ -7,7 +7,7 @@
 
 using UnityEngine;
 
-namespace du.Sys {
+namespace du.App {
 
 	/// <summary>
 	/// MonoBehaviourを継承したシングルトン

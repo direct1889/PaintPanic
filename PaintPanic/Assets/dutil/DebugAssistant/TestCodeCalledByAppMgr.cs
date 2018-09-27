@@ -21,9 +21,9 @@ namespace du.Test {
 
 		public void OnUpdate() {
 
-			Sys.AppManager.Instance.TestLog.SetText("IsTouch", di.Touch.GetTouch(0));
-			Sys.AppManager.Instance.TestLog.SetText("TouchPos", di.Touch.GetTouchPosition(0));
-			Sys.AppManager.Instance.TestLog.SetText("Hoge", "Hoge");
+			Mgr.Debug.TestLog.SetText("IsTouch", di.Touch.GetTouch(0));
+			Mgr.Debug.TestLog.SetText("TouchPos", di.Touch.GetTouchPosition(0));
+			Mgr.Debug.TestLog.SetText("Hoge", "Hoge");
 
 		}
 

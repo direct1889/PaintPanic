@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-namespace du.Sys {
+namespace du.App {
 
 	public class AppManager : MonoBehaviour {
 
@@ -20,10 +20,6 @@ namespace du.Sys {
 		[SerializeField] bool m_isMute = true;
 		[SerializeField] float m_masterVolume = 0.01f;
 		[SerializeField] bool m_isDebugMode = false;
-		[SerializeField] TestLogger m_testLog = null;
-
-		public TestLogger TestLog { get { return m_testLog; }}
-		Test.ITestCode m_test = null;
 
 		#endregion
 
@@ -37,16 +33,11 @@ namespace du.Sys {
 			}
 
 			Instance = this;
+			Mgr.RegisterMgr(Instance);
 			DontDestroyOnLoad(gameObject);
 
 			Boot();
 
-		}
-
-		private void Update() {
-			if (m_isDebugMode) {
-				m_test.OnUpdate();
-			}
 		}
 
 		#endregion
@@ -57,6 +48,8 @@ namespace du.Sys {
 		private void Boot() {
 
 			Debug.Log("Boot Apprication");
+
+			Test.DebugAssistant.Instance.gameObject.SetActive(m_isDebugMode);
 
 			Cursor.visible = false;
 
@@ -85,13 +78,6 @@ namespace du.Sys {
 
 			// GlobalStore.IsMute = m_isMute;
 
-			if (m_isDebugMode) {
-				Instance.m_test = new Test.TestCodeCalledByAppMgr();
-				Instance.m_test.OnBoot();
-			}
-			else {
-				Instance.m_testLog.gameObject.SetActive(false);
-			}
 
 
 		}
