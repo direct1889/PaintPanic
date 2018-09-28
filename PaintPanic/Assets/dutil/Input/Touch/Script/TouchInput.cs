@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UTouch = UnityEngine.Touch;
-
+using System;
+using static du.di.ExTouchInfo;
 
 namespace du.di {
 
@@ -36,7 +37,7 @@ namespace du.di {
 			}
 			else {
 				if (Input.touchCount >= i) {
-					return (TouchInfo)((int)Input.GetTouch(i).phase);
+					return Phase2Info(Input.GetTouch(i).phase);
 				}
 			}
 			return TouchInfo.None;
@@ -49,7 +50,7 @@ namespace du.di {
 		public static Vector3 GetTouchPosition(int i) {
 			if (Application.isEditor) {
 				TouchInfo touch = GetTouch(i);
-				if (touch != TouchInfo.None) {
+				if (touch.IsTouching()) {
 					PreviousPosition = Input.mousePosition;
 					return PreviousPosition;
 				}
@@ -68,7 +69,7 @@ namespace du.di {
 		public static Vector3 GetDeltaPosition(int i) {
 			if (Application.isEditor) {
 				TouchInfo info = GetTouch(i);
-				if (info != TouchInfo.None) {
+				if (info.IsTouching()) {
 					Vector3 currentPosition = Input.mousePosition;
 					Vector3 delta = currentPosition - PreviousPosition;
 					PreviousPosition = currentPosition;
@@ -110,39 +111,66 @@ namespace du.di {
 		}
 
 
-		public static bool IsTouch { get { return GetTouch(0) != TouchInfo.None; }}
+		public static bool IsTouch { get { return GetTouch(0).IsTouching(); }}
+		// public static bool IsTouch { get { return GetTouch(0) != TouchInfo.None; } }
 
 	}
 
 	/// <summary>
 	/// タッチ情報。UnityEngine.TouchPhase に None の情報を追加拡張。
 	/// </summary>
+	[Flags]
 	public enum TouchInfo {
 		/// <summary>
 		/// タッチなし
 		/// </summary>
-		None = -1,
+		None = 0,
 
 		// 以下は UnityEngine.TouchPhase の値に対応
 		/// <summary>
 		/// タッチ開始
 		/// </summary>
-		Began = 0,
+		Began = 1, // 0b0001,
 		/// <summary>
-		/// タッチ移動
+		/// タッチ中かつ移動中
 		/// </summary>
-		Moved = 1,
+		Moved = 3, // 0b0011,
 		/// <summary>
-		/// タッチ静止
+		/// タッチ中かつ静止中
 		/// </summary>
-		Stationary = 2,
+		Stationary = 5, // 0b0101
 		/// <summary>
 		/// タッチ終了
 		/// </summary>
-		Ended = 3,
+		Ended = 2, // 0b0010,
 		/// <summary>
-		/// タッチキャンセル
+		/// システムがタッチの追跡をキャンセルしたとき
 		/// </summary>
-		Canceled = 4,
+		Canceled = 4, // 0b0100,
+
+		// -----------------------------------
+		// ビットフラグ用
+		// 末尾の桁が1か否かで区別
+		Touching = 1, // 0b0001
 	}
+
+	public static class ExTouchInfo {
+
+		public static TouchInfo Phase2Info(TouchPhase phase) {
+			switch (phase) {
+				case TouchPhase.Began		: return TouchInfo.Began;
+				case TouchPhase.Moved		: return TouchInfo.Moved;
+				case TouchPhase.Stationary	: return TouchInfo.Stationary;
+				case TouchPhase.Ended		: return TouchInfo.Ended;
+				case TouchPhase.Canceled	: return TouchInfo.Canceled;
+				default						: return TouchInfo.None;
+			}
+		}
+
+		public static bool IsTouching(this TouchInfo own) {
+			return (own & TouchInfo.Touching) != 0;
+		}
+
+	}
+
 }
