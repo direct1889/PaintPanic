@@ -5,9 +5,66 @@ using static du.di.ExTouchInfo;
 
 namespace du.di {
 
+	public interface ITouchEvent {
+
+	}
+
+	public class TouchEvent : ITouchEvent {
+
+		#region property
+
+		public Vector3 Enter { private set; get; }
+		public Vector3 Current { private set; get; }
+		public Vector3 Exit { private set; get; }
+		public bool HasExited { private set; get; }
+
+		#endregion
+
+
+		#region ctor/dtor
+
+		public TouchEvent(Vector3 enter) {
+			Enter = enter;
+			PositionUpdate(enter);
+		}
+
+		#endregion
+
+
+		#region public
+
+		public void PositionUpdate(Vector3 current) {
+			Current = current;
+		}
+
+		public void OnExit(Vector3 exit) {
+			Exit = exit;
+			HasExited = true;
+		}
+
+		#endregion
+
+	}
+
 	public static class Touch {
-		private static Vector3 TouchPosition = Vector3.zero;
-		private static Vector3 PreviousPosition = Vector3.zero;
+
+		#region field
+
+		static Vector3 TouchPosition = Vector3.zero;
+		static Vector3 PreviousPosition = Vector3.zero;
+
+		#endregion
+
+
+		#region property
+
+		public static Vector3 LastTouchedPosition {
+			get { return TouchPosition; }
+		}
+
+		public static Vector3 LastTouchedPositionP {
+			get { return PreviousPosition; }
+		}
 
 		public static int touchCount {
 			get {
@@ -24,6 +81,11 @@ namespace du.di {
 				}
 			}
 		}
+
+		#endregion
+
+
+		#region public
 
 		/// <summary>
 		/// タッチ情報を取得(エディタと実機を考慮)
@@ -113,6 +175,30 @@ namespace du.di {
 
 		public static bool IsTouch { get { return GetTouch(0).IsTouching(); }}
 		// public static bool IsTouch { get { return GetTouch(0) != TouchInfo.None; } }
+
+		#endregion
+
+
+		#region private
+
+		private static void FixedUpdate() {
+			switch (Touch.GetTouch(0)) {
+				case TouchInfo.None: break;
+				case TouchInfo.Began: {
+						// s_onTouchEnter.OnNext(Touch.LastTouchedPosition);
+					}
+					break;
+				case TouchInfo.Moved: break;
+				case TouchInfo.Stationary: break;
+				case TouchInfo.Ended: {
+						// s_onTouchExit.OnNext(Touch.LastTouchedPosition);
+					}
+					break;
+				case TouchInfo.Canceled: break;
+			}
+		}
+
+		#endregion
 
 	}
 

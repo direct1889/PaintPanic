@@ -23,7 +23,8 @@ namespace du.Test {
 
 			Mgr.Debug.TestLog.SetText("IsTouch", di.Touch.GetTouch(0));
 			Mgr.Debug.TestLog.SetText("TouchPos", di.Touch.GetTouchPosition(0));
-			Mgr.Debug.TestLog.SetText("Hoge", "Hoge");
+			Mgr.Debug.TestLog.SetText("LastTouchPos", di.Touch.LastTouchedPosition);
+			Mgr.Debug.TestLog.SetText("LastTouchPosP", di.Touch.LastTouchedPositionP);
 
 		}
 

@@ -1,5 +1,6 @@
-﻿// using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 namespace du.App {
@@ -21,6 +22,8 @@ namespace du.App {
 		[SerializeField] float m_masterVolume = 0.01f;
 		[SerializeField] bool m_isDebugMode = false;
 
+		IList<Action> m_fixedUpdateActs = null;
+
 		#endregion
 
 
@@ -40,6 +43,21 @@ namespace du.App {
 
 		}
 
+		private void FixedUpdate() {
+			for (int i = 0; i < m_fixedUpdateActs.Count; ++i) {
+				m_fixedUpdateActs[i]();
+			}
+		}
+
+		#endregion
+
+
+		#region public
+
+		public void RegisterFixedUpdatedAction(Action act) {
+			m_fixedUpdateActs.Add(act);
+		}
+
 		#endregion
 
 
@@ -49,11 +67,11 @@ namespace du.App {
 
 			Debug.Log("Boot Apprication");
 
+			m_fixedUpdateActs = new List<Action>();
 			Test.DebugAssistant.Instance.gameObject.SetActive(m_isDebugMode);
+			di.RxTouchInput.Initialize();
 
 			Cursor.visible = false;
-
-			// dev.Debug.Initialize(m_isDebugMode, m_isDebugEntry);
 
 			// DG.Tweening.DOTween.Init();
 
