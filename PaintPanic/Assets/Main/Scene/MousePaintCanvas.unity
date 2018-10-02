@@ -257,6 +257,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 84d17ab2a13024f2494f294271e9fd1e, type: 2}
+    - target: {fileID: 124258, guid: 68e6cd702d40b5e42b27fa9751ff0722, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68e6cd702d40b5e42b27fa9751ff0722, type: 2}
   m_IsPrefabAsset: 0
@@ -303,7 +307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1420899389
 AudioListener:
   m_ObjectHideFlags: 0
