@@ -21,10 +21,10 @@ namespace du.Test {
 
 		public void OnUpdate() {
 
-			Mgr.Debug.TestLog.SetText("IsTouch", di.Touch.GetTouch(0));
-			Mgr.Debug.TestLog.SetText("TouchPos", di.Touch.GetTouchPosition(0));
-			Mgr.Debug.TestLog.SetText("LastTouchPos", di.Touch.LastTouchedPosition);
-			Mgr.Debug.TestLog.SetText("LastTouchPosP", di.Touch.LastTouchedPositionP);
+			Mgr.Debug.TestLog?.SetText("IsTouch", di.Touch.GetTouch(0));
+			Mgr.Debug.TestLog?.SetText("TouchPos", di.Touch.GetTouchPosition(0));
+			Mgr.Debug.TestLog?.SetText("LastTouchPos", di.Touch.LastTouchedPosition);
+			Mgr.Debug.TestLog?.SetText("LastTouchPosP", di.Touch.LastTouchedPositionP);
 
 		}
 

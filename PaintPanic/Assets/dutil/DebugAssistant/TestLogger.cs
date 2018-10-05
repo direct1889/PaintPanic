@@ -20,6 +20,8 @@ namespace du.Test {
 
 		private void Start() {
 
+			Mgr.Debug.SetTestLog(this);
+
 			for (int i = 0; i < m_logsLabel.Count; ++i) {
 				dui.TextBox logBox = Instantiate(m_logBoxPref).GetComponent<dui.TextBox>();
 				logBox.transform.parent = transform;

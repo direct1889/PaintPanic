@@ -6,17 +6,16 @@ namespace du.Test {
 
 		#region field
 
-		[SerializeField] TestLogger m_testLog = null;
-
-		public TestLogger TestLog { get { return m_testLog; } }
-		Test.ITestCode m_test = null;
+		public TestLogger TestLog { private set; get; } = null;
+		ITestCode m_test = null;
 
 		#endregion
 
 
 		#region mono
+
 		private void Awake() {
-			Instance.m_test = new Test.TestCodeCalledByAppMgr();
+			Instance.m_test = new TestCodeCalledByAppMgr();
 			Mgr.RegisterMgr(Instance);
 			Instance.m_test.OnBoot();
 		}
@@ -28,7 +27,12 @@ namespace du.Test {
 		#endregion
 
 
-		#region private
+		#region public
+
+		public void SetTestLog(TestLogger log) {
+			TestLog = log;
+		}
+
 		#endregion
 
 	}
